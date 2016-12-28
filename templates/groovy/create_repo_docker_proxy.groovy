@@ -9,44 +9,6 @@ authentication = parsed_args.remote_username == null ? null : [
         password: parsed_args.remote_password
 ]
 
-/*
-@param name                        The name of the new Repository
-@param remoteUrl                   The url of the external proxy for this Repository
-@param indexType                   Use 'REGISTRY' to use the proxy url for the index as well. Use 'HUB' to use the
-                                   index from DockerHub. Use 'CUSTOM' in conjunction with the 'indexUrl' param to
-                                   specify a custom index location
-@param indexUrl                    The url of a 'CUSTOM' index; only used in conjunction with the 'indexType'
-                                   parameter
-@param httpPort                    The http port to accept traffic for this Repository on (optional)
-@param httpsPort                   The https port to accept traffic for this Repository on (optional)
-@param blobStoreName               The BlobStore the Repository should use
-@param strictContentTypeValidation Whether or not the Repository should enforce strict content types
-@param v1Enabled                   Whether or not this Repository supports Docker V1 format
-@return the newly created Repository
-
-Repository createDockerProxy(final String name,
-                             final String remoteUrl,
-                             final String indexType,
-                             final String indexUrl,
-                             Integer httpPort,
-                             Integer httpsPort,
-                             final String blobStoreName,
-                             final boolean strictContentTypeValidation,
-                             final boolean v1Enabled);
-*/
-
-
-/*
-    Configuration configuration = createProxy(name, 'docker-proxy', remoteUrl, blobStoreName, strictContentTypeValidation)
-    configuration.attributes.docker = configureDockerAttributes(httpPort, httpsPort, v1Enabled)
-    configuration.attributes.dockerProxy = [
-        indexType: indexType,
-        indexUrl : indexUrl
-    ]
-    configuration.attributes.httpclient.connection.useTrustStore = true
-    createRepository(configuration)
- */
-
 configuration = new Configuration(
         repositoryName: parsed_args.name,
         recipeName: 'docker-proxy',

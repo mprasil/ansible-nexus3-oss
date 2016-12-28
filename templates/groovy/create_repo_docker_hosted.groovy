@@ -3,15 +3,6 @@ import org.sonatype.nexus.repository.config.Configuration
 
 parsed_args = new JsonSlurper().parseText(args)
 
-// https://javalibs.com/artifact/org.sonatype.nexus.plugins/nexus-script-plugin?className=org.sonatype.nexus.script.plugin.RepositoryApi&source
-//   Repository createDockerHosted(final String name,                    // required
-//                                 Integer httpPort,                     // optional
-//                                 Integer httpsPort,                    // optional
-//                                 String blobStoreName,                 // required
-//                                 boolean v1Enabled,                    // required - docker specific
-//                                 boolean strictContentTypeValidation,  // required
-//                                 WritePolicy writePolicy);             // required
-
 configuration = new Configuration(
         repositoryName: parsed_args.name,
         recipeName: 'docker-hosted',
