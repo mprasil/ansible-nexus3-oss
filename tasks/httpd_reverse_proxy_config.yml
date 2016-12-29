@@ -17,6 +17,12 @@
     dest: "/etc/pki/tls/private"
     mode: 600
 
+- name: Copy SSL certificate chain file
+  copy:
+    src: "{{ httpd_ssl_certificate_chain_file }}"
+    dest: "/etc/pki/tls/certs"
+    mode: 600
+
 - name: Setsebool httpd_can_network_connect
   shell: 'setsebool -P httpd_can_network_connect on'
 
