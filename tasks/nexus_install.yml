@@ -1,4 +1,10 @@
 ---
+
+- name: Install libsemanage-python
+  yum:
+    name: libsemanage-python
+    state: present
+
 - name: Download nexus_package
   get_url:
     url: http://download.sonatype.com/nexus/3/{{ nexus_package }}
@@ -35,7 +41,10 @@
   register: nexus_systemd_service_file
 
 - name: Stop systemd service
-  shell: 'systemctl stop nexus.service'
+  systemd:
+    state: stopped
+    daemon_reload: yes
+    name: nexus
   when: nexus_systemd_service_file.stat.exists
 
 - name: Update symlink nexus-latest
@@ -148,11 +157,6 @@
     src: "nexus.service"
     dest: "/etc/systemd/system"
 
-# systemd available from ansible 2.2 only
-# - name: Enable nexus service
-#   systemd: name=nexus daemon_reload=yes enabled=yes state=started
-
-
 - name: 'Check if data directory is empty (first-time install)'
   command: "ls {{ nexus_data_dir }}"
   register: nexus_data_dir_contents
@@ -163,14 +167,12 @@
     state: touch
   when: nexus_latest_version.changed and nexus_data_dir_contents.stdout != ""
 
-- name: Reload systemd service configuration
-  shell: 'systemctl daemon-reload'
-
-- name: Enable systemd service
-  shell: 'systemctl enable nexus.service'
-
-- name: Restart systemd service
-  shell: 'systemctl restart nexus.service'
+- name: Enable nexus service
+  systemd:
+    name: nexus
+    daemon_reload: yes
+    enabled: yes
+    state: started
 
 - name: Waiting for Nexus service to be ready...
   wait_for:
@@ -182,24 +184,6 @@
   wait_for:
     port: 8081
     delay: 5
-
-- name: Chown configuration files from {{ nexus_installation_dir }}/nexus-latest/etc back to root
-  file:
-    path: "{{ nexus_installation_dir }}/nexus-latest/etc"
-    owner: "root"
-    group: "root"
-    mode: "0644"
-    recurse: true
-
-- name: Prevent nexus to create any new configuration files in  {{ nexus_installation_dir }}/nexus-latest/etc
-  file:
-    path: "{{ item }}"
-    state: "directory"
-    owner: "root"
-    group: "root"
-    mode: "0755"
-    recurse: false
-  with_items: "{{ nexus_app_dir_settings_dirs }}"
 
 - name: First-time install admin password
   set_fact:

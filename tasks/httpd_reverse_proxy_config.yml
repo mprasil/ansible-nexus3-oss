@@ -9,25 +9,31 @@
   copy:
     src: "{{ httpd_ssl_certificate_file }}"
     dest: "/etc/pki/tls/certs"
-    mode: 600
+    mode: 0600
 
 - name: Copy SSL certificate key file
   copy:
     src: "{{ httpd_ssl_certificate_key_file }}"
     dest: "/etc/pki/tls/private"
-    mode: 600
+    mode: 0600
 
 - name: Copy SSL certificate chain file
   copy:
     src: "{{ httpd_ssl_certificate_chain_file }}"
     dest: "/etc/pki/tls/certs"
-    mode: 600
+    mode: 0600
 
-- name: Setsebool httpd_can_network_connect
-  shell: 'setsebool -P httpd_can_network_connect on'
+- name: Set se linux boolean thing
+  seboolean:
+    name: httpd_can_network_connect
+    state: yes
+    persistent: yes
 
 - name: Restart httpd
-  shell: 'systemctl restart httpd.service'
+  systemd:
+    state: restarted
+    daemon_reload: yes
+    name: httpd
 
 - name: Waiting for httpd to be restarted
   wait_for:
