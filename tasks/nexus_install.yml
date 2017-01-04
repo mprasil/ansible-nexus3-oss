@@ -145,12 +145,12 @@
     regexp: ".*run_as_user=.*"
     line: "run_as_user=\"{{ nexus_os_user }}\""
 
-- name: Bind nexus service to 127.0.0.1 only
+# Allow manual httpd setup by specifying this value directly
+- name: Set nexus service bind address
   lineinfile:
     dest: "{{ nexus_default_settings_file }}"
     regexp: "^application-host=.*"
-    line: "application-host=127.0.0.1"
-  when: httpd_setup_enable
+    line: "application-host={{ nexus_bind_address }}"
 
 - name: Create systemd service configuration
   template:
