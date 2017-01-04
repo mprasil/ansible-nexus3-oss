@@ -1,0 +1,12 @@
+---
+
+- hosts: localhost
+  remote_user: root
+  vars:
+    nexus_version: '3.1.0-04'
+  roles:
+    - role: ansiblebit.oracle-java
+      oracle_java_set_as_default: yes
+    - role: geerlingguy.apache
+      apache_create_vhosts: no
+    - role_under_test
