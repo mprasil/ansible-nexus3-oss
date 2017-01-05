@@ -10,6 +10,8 @@ configuration = new Configuration(
         attributes: [
                 docker  : [
                         v1Enabled: Boolean.valueOf(parsed_args.v1_enabled),
+                        httpPort: parsed_args.http_port,
+                        httpsPort: parsed_args.https_port
                 ],
                 storage: [
                         writePolicy: parsed_args.write_policy.toUpperCase(),

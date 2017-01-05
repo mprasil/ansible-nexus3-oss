@@ -16,6 +16,8 @@ configuration = new Configuration(
         attributes: [
                 docker : [
                         v1Enabled: Boolean.valueOf(parsed_args.v1_enabled),
+                        httpPort: parsed_args.http_port,
+                        httpsPort: parsed_args.https_port
                 ],
                 dockerProxy : [
                         indexUrl: parsed_args.index_url,
