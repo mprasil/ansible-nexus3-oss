@@ -9,7 +9,9 @@ configuration = new Configuration(
         online: true,
         attributes: [
                 docker : [
-                        v1Enabled: Boolean.valueOf(parsed_args.v1_enabled)
+                        v1Enabled: Boolean.valueOf(parsed_args.v1_enabled),
+                        httpPort: parsed_args.http_port,
+                        httpsPort: parsed_args.https_port
                 ],
                 group  : [
                         memberNames: parsed_args.member_repos

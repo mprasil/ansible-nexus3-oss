@@ -52,14 +52,13 @@ The fully qualified domain name under which the nexus instance will be accessibl
 
     nexus_branding_header: ""
     nexus_branding_footer: "Last provisionned {{ ansible_date_time.iso8601 }}"
-    
+
 Header and footer branding, those can contain HTML.
 
-    httpd_setup_enable: false
-    httpd_ssl_certificate_file: 'files/nexus.vm.crt'
-    httpd_ssl_certificate_key_file: 'files/nexus.vm.key'
+    nexus_bind_address: 127.0.0.1
 
-Setup an [SSL Reverse-proxy](https://books.sonatype.com/nexus-book/3.0/reference/install.html#_example_reverse_proxy_ssl_termination_at_base_path), this needs httpd installed. Note : when `httpd_setup_enable` is set to `true`, nexus binds to 127.0.0.1:8081 thus *not* being directly accessible on HTTP port 8081 from an external IP.
+If configuring a reverse proxy, bind nexus to localhost only.  By default nexus
+will listen on all interfaces (0.0.0.0).
 
     ldap_connections: []
 
@@ -216,10 +215,6 @@ The java and httpd requirements /can/ be fulfilled with the following galaxy rol
     nexus_version: '3.1.0-04'
     nexus_timezone: 'Canada/Eastern'
     nexus_admin_password: "{{ vault_nexus_admin_password }}"
-    httpd_server_name: 'nexus.vm'
-    httpd_setup_enable: true
-    httpd_ssl_certificate_file: "{{ vault_httpd_ssl_certificate_file }}"
-    httpd_ssl_certificate_key_file: "{{ vault_httpd_ssl_certificate_key_file }}"
     ldap_connections:
       - ldap_name: 'Company LDAP'
         ldap_protocol: 'ldaps'
