@@ -67,7 +67,6 @@ nexus_local_users: []
 #      - developers
 
 nexus_delete_default_repos: false
-
 nexus_delete_default_blobstore: false
 
 nexus_blobstores: []
@@ -140,7 +139,13 @@ _nexus_repos_maven_defaults:
   write_policy: allow_once # allow_once or allow
 
 _nexus_repos_docker_defaults:
-  blob_store: default # Note : cannot be updated once the repo has been created
+  # Note : cannot be updated once the repo has been created
+  blob_store: default
+
   strict_content_validation: true
-  v1_enabled: false # enable docker v1 API
-  write_policy: allow_once # allow_once or allow
+
+  # currently required for search to work
+  v1_enabled: true
+
+  # allow_once or allow
+  write_policy: allow_once
