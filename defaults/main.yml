@@ -125,11 +125,20 @@ nexus_scheduled_tasks: []
 #    taskProperties:
 #      blobstoreName: 'default' # all task attributes are stored as strings by nexus internally
 
+nexus_repos_rubygems_hosted: []
+nexus_repos_rubygems_group: []
+nexus_repos_rubygems_proxy: []
+
 _nexus_privilege_defaults:
   type: repository-view
   format: maven2
   actions:
     - read
+
+_nexus_repos_rubygems_defaults:
+  blob_store: default # Note : cannot be updated once the repo has been created
+  strict_content_validation: true
+  write_policy: allow_once # allow_once or allow
 
 _nexus_repos_maven_defaults:
   blob_store: default # Note : cannot be updated once the repo has been created
