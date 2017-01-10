@@ -14,6 +14,8 @@ nexus_anonymous_access: false
 
 public_hostname: 'nexus.vm'
 
+# HTML snippets to be included in branding header and footer.
+# Use '$baseUrl' to insert the base URL of the server (e.g. to reference an image)
 nexus_branding_header: ""
 nexus_branding_footer: "Last provisionned {{ ansible_date_time.iso8601 }}"
 
@@ -126,8 +128,23 @@ nexus_scheduled_tasks: []
 #      blobstoreName: 'default' # all task attributes are stored as strings by nexus internally
 
 nexus_repos_rubygems_hosted: []
+# nexus_repos_rubygems_proxy:
+#   - name: rubygems-hosted
+#     blob_store: default
+
 nexus_repos_rubygems_group: []
+# nexus_repos_rubygems_group:
+#   - name: rubygems
+#     blob_store: default
+#     member_repos:
+#       - rubygems-proxy
+#       - rubygems-hosted
+
 nexus_repos_rubygems_proxy: []
+# nexus_repos_rubygems_proxy:
+#   - name: rubygems-proxy
+#     blob_store: default
+#     remote_url: https://rubygems.org
 
 _nexus_privilege_defaults:
   type: repository-view
