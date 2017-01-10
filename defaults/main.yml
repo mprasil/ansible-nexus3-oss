@@ -23,22 +23,22 @@ nexus_branding_footer: "Last provisionned {{ ansible_date_time.iso8601 }}"
 nexus_bind_address: 0.0.0.0
 
 ldap_connections: []
-# example ldap config :
-#  - ldap_name: 'My Company LDAP' # used as a key to update the ldap config
-#    ldap_protocol: 'ldaps' # ldap or ldaps
-#    ldap_hostname: 'ldap.mycompany.com'
-#    ldap_port: 636
-#    ldap_search_base: 'dc=mycompany,dc=net'
-#    ldap_user_base_dn: 'ou=users'
-#    ldap_user_object_class: 'inetOrgPerson'
-#    ldap_user_id_attribute: 'uid'
-#    ldap_user_real_name_attribute: 'cn'
-#    ldap_user_email_attribute: 'mail'
-#    ldap_group_base_dn: 'ou=groups'
-#    ldap_group_object_class: 'posixGroup'
-#    ldap_group_id_attribute: 'cn'
-#    ldap_group_member_attribute: 'memberUid'
-#    ldap_group_member_format: '${username}'
+# ldap_connections:
+#    - ldap_name: 'My Company LDAP' # used as a key to update the ldap config
+#      ldap_protocol: 'ldaps' # ldap or ldaps
+#      ldap_hostname: 'ldap.mycompany.com'
+#      ldap_port: 636
+#      ldap_search_base: 'dc=mycompany,dc=net'
+#      ldap_user_base_dn: 'ou=users'
+#      ldap_user_object_class: 'inetOrgPerson'
+#      ldap_user_id_attribute: 'uid'
+#      ldap_user_real_name_attribute: 'cn'
+#      ldap_user_email_attribute: 'mail'
+#      ldap_group_base_dn: 'ou=groups'
+#      ldap_group_object_class: 'posixGroup'
+#      ldap_group_id_attribute: 'cn'
+#      ldap_group_member_attribute: 'memberUid'
+#      ldap_group_member_format: '${username}'
 
 # also see _nexus_privilege_defaults below
 nexus_privileges:
@@ -59,73 +59,78 @@ nexus_roles:
     roles: []
 
 nexus_local_users: []
-# example user item :
-#  - username: jenkins # used as key to update
-#    first_name: Jenkins
-#    last_name: CI
-#    email: support@company.com
-#    password: "s3cr3t"
-#    roles:
-#      - developers
+# nexus_local_users:
+#   - username: jenkins # used as key to update
+#     first_name: Jenkins
+#     last_name: CI
+#     email: support@company.com
+#     password: "s3cr3t"
+#     roles:
+#       - developers
 
 nexus_delete_default_repos: false
 nexus_delete_default_blobstore: false
 
 nexus_blobstores: []
-# example blobstore item :
-# - name: separate-storage
-#   path: /mnt/custom/path
+# nexus_blobstores:
+#   - name: separate-storage
+#     path: /mnt/custom/path
 
 nexus_repos_docker_proxy: []
-# - name: central
-#   remote_url: 'https://repo1.maven.org/maven2/'
-#   layout_policy: permissive
-# - name: jboss
-#   remote_url: 'https://repository.jboss.org/nexus/content/groups/public-jboss/'
+# nexus_repos_docker_proxy:
+#   - name: central
+#     remote_url: 'https://repo1.maven.org/maven2/'
+#     layout_policy: permissive
+#   - name: jboss
+#     remote_url: 'https://repository.jboss.org/nexus/content/groups/public-jboss/'
 
 nexus_repos_docker_hosted: []
-# - name: production-docker
-#   v1_enabled: false
-#   write_policy: allow_once
+# nexus_repos_docker_hosted:
+#   - name: production-docker
+#     v1_enabled: false
+#     write_policy: allow_once
 
 nexus_repos_docker_group: []
-# - name: public
-#   member_repos:
-#     - central
-#     - jboss
+# nexus_repos_docker_group:
+#   - name: public
+#     member_repos:
+#       - central
+#       - jboss
 #
 
 # also see _nexus_repos_maven_defaults below
 nexus_repos_maven_proxy: []
-# - name: central
-#   remote_url: 'https://repo1.maven.org/maven2/'
-#   layout_policy: permissive
-# - name: jboss
-#   remote_url: 'https://repository.jboss.org/nexus/content/groups/public-jboss/'
-# example with a login/password :
-# - name: secret-remote-repo
-#   remote_url: 'https://company.com/repo/secure/private/go/away'
-#   remote_username: 'username'
-#   remote_password: 'secret'
+# nexus_repos_maven_proxy:
+#   - name: central
+#     remote_url: 'https://repo1.maven.org/maven2/'
+#     layout_policy: permissive
+#   - name: jboss
+#     remote_url: 'https://repository.jboss.org/nexus/content/groups/public-jboss/'
+#   - name: secret-remote-repo
+#     remote_url: 'https://company.com/repo/secure/private/go/away'
+#     remote_username: 'username'
+#     remote_password: 'secret'
 
 nexus_repos_maven_hosted: []
-# - name: private-release
-#   version_policy: release
-#   write_policy: allow_once
+# nexus_repos_maven_hosted:
+#   - name: private-release
+#     version_policy: release
+#     write_policy: allow_once
 #
 nexus_repos_maven_group: []
-# - name: public
-#   member_repos:
-#     - central
-#     - jboss
+# nexus_repos_maven_group:
+#   - name: public
+#     member_repos:
+#       - central
+#       - jboss
 #
 nexus_scheduled_tasks: []
-#  example task to compact blobstore :
-#  - name: compact-blobstore
-#    cron: '0 0 22 * * ?'
-#    typeId: blobstore.compact
-#    taskProperties:
-#      blobstoreName: 'default' # all task attributes are stored as strings by nexus internally
+# nexus_scheduled_tasks:
+#   - name: compact-blobstore
+#     cron: '0 0 22 * * ?'
+#     typeId: blobstore.compact
+#     taskProperties:
+#       blobstoreName: 'default' # all task attributes are stored as strings by nexus internally
 
 nexus_repos_rubygems_hosted: []
 # nexus_repos_rubygems_proxy:
@@ -165,13 +170,7 @@ _nexus_repos_maven_defaults:
   write_policy: allow_once # allow_once or allow
 
 _nexus_repos_docker_defaults:
-  # Note : cannot be updated once the repo has been created
-  blob_store: default
-
+  blob_store: default              # Note : cannot be updated once the repo has been created
   strict_content_validation: true
-
-  # currently required for search to work
-  v1_enabled: true
-
-  # allow_once or allow
-  write_policy: allow_once
+  v1_enabled: true                 # currently required for search to work
+  write_policy: allow              # To overwrite :latest this is required (AFAIK)
