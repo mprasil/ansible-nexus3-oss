@@ -209,6 +209,9 @@
     - delete_repo
     - delete_blobstore
     - create_blobstore
+    - create_repo_rubygems_group
+    - create_repo_rubygems_hosted
+    - create_repo_rubygems_proxy
     - create_repo_docker_group
     - create_repo_docker_hosted
     - create_repo_docker_proxy

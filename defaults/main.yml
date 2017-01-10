@@ -14,6 +14,8 @@ nexus_anonymous_access: false
 
 public_hostname: 'nexus.vm'
 
+# HTML snippets to be included in branding header and footer.
+# Use '$baseUrl' to insert the base URL of the server (e.g. to reference an image)
 nexus_branding_header: ""
 nexus_branding_footer: "Last provisionned {{ ansible_date_time.iso8601 }}"
 
@@ -67,7 +69,6 @@ nexus_local_users: []
 #      - developers
 
 nexus_delete_default_repos: false
-
 nexus_delete_default_blobstore: false
 
 nexus_blobstores: []
@@ -126,11 +127,35 @@ nexus_scheduled_tasks: []
 #    taskProperties:
 #      blobstoreName: 'default' # all task attributes are stored as strings by nexus internally
 
+nexus_repos_rubygems_hosted: []
+# nexus_repos_rubygems_proxy:
+#   - name: rubygems-hosted
+#     blob_store: default
+
+nexus_repos_rubygems_group: []
+# nexus_repos_rubygems_group:
+#   - name: rubygems
+#     blob_store: default
+#     member_repos:
+#       - rubygems-proxy
+#       - rubygems-hosted
+
+nexus_repos_rubygems_proxy: []
+# nexus_repos_rubygems_proxy:
+#   - name: rubygems-proxy
+#     blob_store: default
+#     remote_url: https://rubygems.org
+
 _nexus_privilege_defaults:
   type: repository-view
   format: maven2
   actions:
     - read
+
+_nexus_repos_rubygems_defaults:
+  blob_store: default # Note : cannot be updated once the repo has been created
+  strict_content_validation: true
+  write_policy: allow_once # allow_once or allow
 
 _nexus_repos_maven_defaults:
   blob_store: default # Note : cannot be updated once the repo has been created
@@ -140,7 +165,13 @@ _nexus_repos_maven_defaults:
   write_policy: allow_once # allow_once or allow
 
 _nexus_repos_docker_defaults:
-  blob_store: default # Note : cannot be updated once the repo has been created
+  # Note : cannot be updated once the repo has been created
+  blob_store: default
+
   strict_content_validation: true
-  v1_enabled: false # enable docker v1 API
-  write_policy: allow_once # allow_once or allow
+
+  # currently required for search to work
+  v1_enabled: true
+
+  # allow_once or allow
+  write_policy: allow_once

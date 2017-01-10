@@ -36,6 +36,15 @@
 - include: create_blobstore_each.yml
   with_items: "{{ nexus_blobstores }}"
 
+- include: create_repo_rubygems_proxy_each.yml
+  with_items: "{{ nexus_repos_rubygems_proxy }}"
+
+- include: create_repo_rubygems_hosted_each.yml
+  with_items: "{{ nexus_repos_rubygems_hosted }}"
+
+- include: create_repo_rubygems_group_each.yml
+  with_items: "{{ nexus_repos_rubygems_group }}"
+
 - include: create_repo_docker_proxy_each.yml
   with_items: "{{ nexus_repos_docker_proxy }}"
 
