@@ -7,10 +7,9 @@ import groovy.json.JsonSlurper
 
 parsed_args = new JsonSlurper().parseText(args)
 
-
 def ldapConfigMgr = container.lookup(LdapConfigurationManager.class.getName());
-
 def ldapConfig = new LdapConfiguration()
+
 boolean update = false;
 
 // Look for existing config to update
@@ -46,17 +45,35 @@ mapping.setUserBaseDn(parsed_args.user_base_dn)
 mapping.setUserObjectClass(parsed_args.user_object_class)
 mapping.setUserIdAttribute(parsed_args.user_id_attribute)
 mapping.setUserRealNameAttribute(parsed_args.user_real_name_attribute)
+// mismatch
 mapping.setEmailAddressAttribute(parsed_args.user_email_attribute)
 
-mapping.setLdapGroupsAsRoles(true)
+mapping.setLdapFilter(parsed_args.user_ldap_filter)
+
+mapping.setUserSubtree(Boolean.valueOf(parsed_args.user_subtree))
+mapping.setUserPasswordAttribute(parsed_args.user_password_attribute)
+
+mapping.setLdapGroupsAsRoles(Boolean.valueOf(parsed_args.ldap_groups_as_roles))
+
+// 'static' or 'dynamic'
+//mapping.setGroupType(parsed_args.ldap_group_type)
+
+//if (parsed_args.ldap_group_type == 'static'){
 mapping.setGroupBaseDn(parsed_args.group_base_dn)
-mapping.setGroupObjectClass(parsed_args.group_object_class)
+if (parsed_args.group_object_class) {
+  mapping.setGroupObjectClass(parsed_args.group_object_class)
+}
 mapping.setGroupIdAttribute(parsed_args.group_id_attribute)
-mapping.setGroupMemberAttribute(parsed_args.group_member_attribute)
-mapping.setGroupMemberFormat(parsed_args.group_member_format)
+
+if (parsed_args.group_member_attribute) {
+  mapping.setGroupMemberAttribute(parsed_args.group_member_attribute)
+}
+
+if (parsed_args.group_member_format) {
+  mapping.setGroupMemberFormat(parsed_args.group_member_format)
+}
 
 ldapConfig.setMapping(mapping)
-
 
 if (update) {
     ldapConfigMgr.updateLdapServerConfiguration(ldapConfig)
