@@ -24,21 +24,29 @@ nexus_bind_address: 0.0.0.0
 
 ldap_connections: []
 # ldap_connections:
-#    - ldap_name: 'My Company LDAP' # used as a key to update the ldap config
-#      ldap_protocol: 'ldaps' # ldap or ldaps
-#      ldap_hostname: 'ldap.mycompany.com'
-#      ldap_port: 636
-#      ldap_search_base: 'dc=mycompany,dc=net'
-#      ldap_user_base_dn: 'ou=users'
-#      ldap_user_object_class: 'inetOrgPerson'
-#      ldap_user_id_attribute: 'uid'
-#      ldap_user_real_name_attribute: 'cn'
-#      ldap_user_email_attribute: 'mail'
-#      ldap_group_base_dn: 'ou=groups'
-#      ldap_group_object_class: 'posixGroup'
-#      ldap_group_id_attribute: 'cn'
-#      ldap_group_member_attribute: 'memberUid'
-#      ldap_group_member_format: '${username}'
+#    - name: 'My Company LDAP' # used as a key to update the ldap config
+#      protocol: 'ldaps' # ldap or ldaps
+#      hostname: 'ldap.mycompany.com'
+#      port: 636
+#      search_base: 'dc=mycompany,dc=net'
+#      user_base_dn: 'ou=users'
+#      user_object_class: 'inetOrgPerson'
+#      user_id_attribute: 'uid'
+#      user_real_name_attribute: 'cn'
+#      user_email_attribute: 'mail'
+#      group_base_dn: 'ou=groups'
+#      group_object_class: 'posixGroup'
+#      group_id_attribute: 'cn'
+#      group_member_attribute: 'memberUid'
+#      group_member_format: '${username}'
+
+_ldap_connection_defaults:
+  protocol: ldaps
+  port: 636
+  user_subtree: false
+  ldap_groups_as_roles: true
+  ldap_group_type: dynamic # 'static' or 'dynamic'
+  user_password_attribute:
 
 # also see _nexus_privilege_defaults below
 nexus_privileges:
