@@ -42,11 +42,41 @@ ldap_connections: []
 
 _ldap_connection_defaults:
   protocol: ldaps
+  host: ''
   port: 636
+  search_base: ''
+  auth_scheme: ldaps
+  auth_realm: ''
+  auth_username: ''
+  auth_password: ''
+
+  connection_timeout: 30
+  connection_retry_delay: 300
+  max_incidents_count: 3
+
+  user_base_dn: ''
   user_subtree: false
-  ldap_groups_as_roles: true
-  ldap_group_type: dynamic # 'static' or 'dynamic'
-  user_password_attribute:
+  user_object_class: ''
+  user_ldap_filter: ''
+  user_id_attribute: ''
+  user_real_name_attribute: ''
+  user_password_attribute: ''
+
+  ldap_groups_as_roles: false
+
+  # 'static' or 'dynamic'
+  group_type: static
+
+  # group_type: static
+  group_base_dn: ''
+  group_subtree: false
+  group_object_class: '' 
+  group_id_attribute: ''
+  group_member_attribute: ''
+  group_member_format: ''
+
+  # group_type: dynamic
+  user_member_of_attribute: ''
 
 # also see _nexus_privilege_defaults below
 nexus_privileges:

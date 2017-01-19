@@ -32,51 +32,46 @@ if (parsed_args.auth_scheme) {
 } else {
   connection.setAuthScheme("none")
 }
+
 connection.setSearchBase(parsed_args.search_base)
 connection.setConnectionTimeout(30)
 connection.setConnectionRetryDelay(300)
 connection.setMaxIncidentsCount(3)
 ldapConfig.setConnection(connection)
 
-
-// Mapping
 mapping = new Mapping()
+
 mapping.setUserBaseDn(parsed_args.user_base_dn)
+mapping.setUserSubtree(Boolean.valueOf(parsed_args.user_subtree))
 mapping.setUserObjectClass(parsed_args.user_object_class)
+mapping.setLdapFilter(parsed_args.user_ldap_filter)
 mapping.setUserIdAttribute(parsed_args.user_id_attribute)
 mapping.setUserRealNameAttribute(parsed_args.user_real_name_attribute)
-// mismatch
 mapping.setEmailAddressAttribute(parsed_args.user_email_attribute)
-
-mapping.setLdapFilter(parsed_args.user_ldap_filter)
-
-mapping.setUserSubtree(Boolean.valueOf(parsed_args.user_subtree))
-mapping.setUserPasswordAttribute(parsed_args.user_password_attribute)
-
 mapping.setLdapGroupsAsRoles(Boolean.valueOf(parsed_args.ldap_groups_as_roles))
 
-// 'static' or 'dynamic'
-//mapping.setGroupType(parsed_args.ldap_group_type)
+log.info("====================== group_member_attribute ================")
+log.info(parsed_args.group_member_attribute)
 
-//if (parsed_args.ldap_group_type == 'static'){
-mapping.setGroupBaseDn(parsed_args.group_base_dn)
-if (parsed_args.group_object_class) {
+if(parsed_args.ldap_group_type == 'static'){
+  mapping.setGroupBaseDn(parsed_args.group_base_dn)
+  mapping.setGroupSubtree(Boolean.valueOf(parsed_args.group_subtree))
   mapping.setGroupObjectClass(parsed_args.group_object_class)
-}
-mapping.setGroupIdAttribute(parsed_args.group_id_attribute)
-
-if (parsed_args.group_member_attribute) {
+  mapping.setGroupIdAttribute(parsed_args.group_id_attribute)
   mapping.setGroupMemberAttribute(parsed_args.group_member_attribute)
-}
-
-if (parsed_args.group_member_format) {
   mapping.setGroupMemberFormat(parsed_args.group_member_format)
+} else if(parsed_args.ldap_group_type == 'dynamic'){
+  mapping.setUserMemberOfAttribute(parsed_args.user_member_of_attribute)
+} else {
+  // TODO: raise error
+  log.error("Unknown ldap_group_type")
+  log.error(parsed_args.ldap_group_type)
 }
 
 ldapConfig.setMapping(mapping)
 
 if (update) {
-    ldapConfigMgr.updateLdapServerConfiguration(ldapConfig)
+  ldapConfigMgr.updateLdapServerConfiguration(ldapConfig)
 } else {
-    ldapConfigMgr.addLdapServerConfiguration(ldapConfig)
+  ldapConfigMgr.addLdapServerConfiguration(ldapConfig)
 }
