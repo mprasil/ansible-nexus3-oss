@@ -25,6 +25,7 @@ ldapConfig.setName(parsed_args.name)
 // Connection
 connection = new Connection()
 connection.setHost(new Connection.Host(Connection.Protocol.valueOf(parsed_args.protocol), parsed_args.hostname, Integer.valueOf(parsed_args.port)))
+
 if (parsed_args.auth_scheme) {
   connection.setAuthScheme(parsed_args.auth_scheme)
   connection.setSystemUsername(parsed_args.auth_user)
@@ -63,9 +64,7 @@ if(parsed_args.ldap_group_type == 'static'){
 } else if(parsed_args.ldap_group_type == 'dynamic'){
   mapping.setUserMemberOfAttribute(parsed_args.user_member_of_attribute)
 } else {
-  // TODO: raise error
-  log.error("Unknown ldap_group_type")
-  log.error(parsed_args.ldap_group_type)
+  throw new RuntimeException("Unknown ldap_group_type: ${parsed_args.ldap_group_type}")
 }
 
 ldapConfig.setMapping(mapping)
