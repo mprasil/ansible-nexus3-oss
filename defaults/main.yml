@@ -9,6 +9,10 @@ nexus_data_dir: '/var/nexus'
 nexus_timezone: 'UTC' # java timezone
 nexus_tmp_dir: '/tmp/nexus'
 
+# Customization can be done via setting environment variables that the 'nexus'
+# command will use, e.g. INSTALL4J_ADD_VM_PARAMS
+nexus_service_environment: ''
+
 nexus_admin_password: 'changeme' # Note : admin password change subsequent to first-time install is *not implemented* yet
 nexus_anonymous_access: false
 
