@@ -193,6 +193,10 @@ nexus_repos_rubygems_proxy: []
 #     blob_store: default
 #     remote_url: https://rubygems.org
 
+nexus_repos_npm_hosted: []
+nexus_repos_npm_group: []
+nexus_repos_npm_proxy: []
+
 _nexus_privilege_defaults:
   type: repository-view
   format: maven2
