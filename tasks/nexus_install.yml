@@ -197,18 +197,24 @@
     state: touch
   when: nexus_latest_version.changed and nexus_data_dir_contents.stdout != ""
 
-- name: Enable nexus service
+- name: Start nexus service
   systemd:
     name: nexus
     daemon_reload: yes
-    enabled: yes
     state: started
+  register: nexus_start
+
+- name: Enable nexus service
+  systemd:
+    name: nexus
+    enabled: yes
 
 - name: Waiting for Nexus service to be ready...
   wait_for:
     path: "{{ nexus_data_dir }}/log/nexus.log"
     search_regex: "Started Sonatype Nexus OSS .*"
     timeout: 1800
+  when: nexus_start.changed
 
 - name: Waiting for nexus to be ready...
   wait_for:
